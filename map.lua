@@ -446,16 +446,17 @@ function map_t:__tostring()
         if k == PLACEHOLDER then
             ks = 'nil'
         elseif type(k) == 'string' then
-            ks = ("%q"):format(k)
-            if ks == ('"' .. k .. '"') then
+            if k:find"^[%a_][%w_]+$" then
                 ks = k
+            else
+                ks = ("%q"):format(k):gsub('\n', 'x0a')
             end
         else
             ks = tostring(k)
         end
 
         if type(v) == 'string' then
-            vs = ("%q"):format(v)
+            vs = ("%q"):format(v):gsub('\n', 'x0a')
         else
             vs = tostring(v)
         end
